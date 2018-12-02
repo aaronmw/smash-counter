@@ -22,7 +22,7 @@ const GlobalStyles = createGlobalStyle`
   :root {
     font-size: 40vh;
     line-height: 24px;
-    font-family: sans-serif;
+    font-family: Boogaloo, sans-serif;
   }
 `;
 
@@ -36,22 +36,30 @@ const AppContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  letter-spacing: -0.1em;
+  padding-right: 0.1em;
 `;
 
 class App extends Component {
   _touchStartedAt = null;
+  _touchEnded = true;
 
   state = {
     counter: 0
   };
 
   handleTouchStart = () => {
+    if (!this._touchEnded) {
+      return;
+    }
+    this._touchEnded = false;
     this._touchStartedAt = Date.now();
     this._decrementTimer = setTimeout(this.decrement, config.durations.long);
     this._resetTimer = setTimeout(this.reset, config.durations.looong);
   };
 
   handleTouchEnd = () => {
+    this._touchEnded = true;
     const touchDuration = Date.now() - this._touchStartedAt;
     switch (true) {
       case touchDuration >= config.durations.looong:
@@ -79,7 +87,7 @@ class App extends Component {
   decrement = () => {
     this.setState(state => ({
       ...state,
-      counter: state.counter - 1
+      counter: Math.max(state.counter - 1, 0)
     }));
   };
 
