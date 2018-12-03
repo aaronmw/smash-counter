@@ -18,6 +18,7 @@ const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
     user-select: none;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    touch-action: manipulation;
   }
   :root {
     font-size: 40vh;
@@ -38,7 +39,6 @@ const AppContainer = styled.div`
   align-items: center;
   letter-spacing: -0.1em;
   padding-right: 0.1em;
-  touch-action: manipulation;
 `;
 
 class App extends Component {
