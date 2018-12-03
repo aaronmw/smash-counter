@@ -38,28 +38,36 @@ const AppContainer = styled.div`
   align-items: center;
   letter-spacing: -0.1em;
   padding-right: 0.1em;
+  ${props => props.isTouched ? `
+    background: ${config.colors.foreground};
+    color: ${config.colors.background};
+  ` : ''}
 `;
 
 class App extends Component {
   _touchStartedAt = null;
-  _touchEnded = true;
 
   state = {
+    touchEnded: true,
     counter: 0
   };
 
   handleTouchStart = () => {
-    if (!this._touchEnded) {
+    if (!this.state.touchEnded) {
       return;
     }
-    this._touchEnded = false;
     this._touchStartedAt = Date.now();
     this._decrementTimer = setTimeout(this.decrement, config.durations.long);
     this._resetTimer = setTimeout(this.reset, config.durations.looong);
+    this.setState({
+      touchEnded: false
+    });
   };
 
   handleTouchEnd = () => {
-    this._touchEnded = true;
+    this.setState({
+      touchEnded: true
+    });
     const touchDuration = Date.now() - this._touchStartedAt;
     switch (true) {
       case touchDuration >= config.durations.looong:
@@ -99,11 +107,12 @@ class App extends Component {
   };
 
   render() {
-    const { counter } = this.state;
+    const { counter, touchEnded } = this.state;
     return (
       <AppContainer
         onTouchStart={this.handleTouchStart}
         onTouchEnd={this.handleTouchEnd}
+        isTouched={!touchEnded}
       >
         <GlobalStyles />
         {counter}
