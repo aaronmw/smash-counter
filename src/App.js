@@ -18,7 +18,6 @@ const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
     user-select: none;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    touch-action: manipulation;
   }
   :root {
     font-size: 40vh;
