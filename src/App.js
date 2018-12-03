@@ -38,6 +38,7 @@ const AppContainer = styled.div`
   align-items: center;
   letter-spacing: -0.1em;
   padding-right: 0.1em;
+  touch-action: manipulation;
 `;
 
 class App extends Component {
